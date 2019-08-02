@@ -19,34 +19,41 @@ public class TrackController {
     }
 
     @Autowired
+    //TrackController constructor is generated
     public TrackController(TrackService trackService) {
         this.trackService = trackService;
     }
 @PostMapping("track")
+//to save a track
     public ResponseEntity<?> saveTrack(@RequestBody Track track) {
         Track savedTrack = trackService.saveTrack(track);
         return new ResponseEntity<>(savedTrack, HttpStatus.OK);
     }
     @GetMapping("track/{id}")
+    //to get a track by its id
     public ResponseEntity<?> getTrackById(@PathVariable int id) {
         System.out.println(id);
         Track retrivedTrack = trackService.getTrackById(id);
-        return new ResponseEntity<Track>(retrivedTrack, HttpStatus.OK);
+        return new ResponseEntity<Track>(retrivedTrack, HttpStatus.FOUND);
     }
     @DeleteMapping("track/{id}")
+    //to delete the track by its id
     public ResponseEntity<?> deleteTrackById(@PathVariable("id") int id) {
         Optional<Track> tracksList = (Optional<Track>) trackService.deleteTrackById(id);
-        return new ResponseEntity<>(tracksList,HttpStatus.OK);
+        return new ResponseEntity<>(tracksList,HttpStatus.GONE);
     }
     @GetMapping("track")
+    //to  get all the tracks
     public ResponseEntity<?> getAllTracks() {
-        return new ResponseEntity<List<Track>>(trackService.getAllTracks(),HttpStatus.OK);
+        return new ResponseEntity<List<Track>>(trackService.getAllTracks(),HttpStatus.FOUND);
 
     }
-    @PutMapping("track")
-    public ResponseEntity<?> updateTrack(@RequestBody Track track) {
-        Track updateTrack = trackService.updateTrack();
-        return new ResponseEntity<Track>(updateTrack,HttpStatus.OK);
+    @PatchMapping("track/{id}")
+    //to update the track
+    public ResponseEntity<?> updateTrackById(@PathVariable int id, @RequestBody Track track) {
+        Track trackUpdated = trackService.updateTrackById(id, track);
+        return new ResponseEntity<>(trackUpdated, HttpStatus.ACCEPTED);
+
     }
 }
 
