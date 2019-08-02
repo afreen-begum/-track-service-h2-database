@@ -29,12 +29,7 @@ public class TrackServiceImpl implements TrackService {
 
     @Override
         public Optional<Track> deleteTrackById(int id) {
-            Optional<Track> optional=trackRepository.findById(id);
-            trackRepository.deleteById(id);
-            if(optional.isPresent())
-            {
-
-            }
+            
             return optional;
     }
 
